@@ -19,6 +19,7 @@
 ## Parameters:
 ##   x is the matrix whose inverse is to be cached
 ## Return:
+##   list of methods available to access and manipulate cache
 makeCacheMatrix <- function(x = matrix()) {
     ## data cache
     ###  set up a location in which to cache our inverted matrix 
