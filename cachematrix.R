@@ -26,21 +26,23 @@ makeCacheMatrix <- function(x = matrix()) {
     m <- NULL
     
     ## define methods
-    ### initialize x to the incoming matrix and m to null
+    
+    ### initialize x to the incoming UNINVERTED matrix y and m to null
     set <- function(y) {
-        #### this operator assigns y from another environment ie calling function
+        #### this operator assigns UNINVERTED matrix y from another environment ie calling function
         #### to x in the current environment ie this function
         x <<- y
-        #### initialize m to null to serve as a flag for empty or filled cache
+        #### initialize m to null to serve as a flag for empty ie UNINVERTED or filled cache
         m <<- NULL
     }
+    
     ###  get the value of the incoming matrix
     get <- function() x
     
     ###  set the value of the inverse
     #### 
     setinverse <- function(solve) m <<- solve
-    ###  get the value of the inverse
+    ###  get the value of the inverse previously calculated and stored in m
     getinverse <- function() m
     
     ## cache methods as a list of key-value pairs 
@@ -62,14 +64,21 @@ makeCacheMatrix <- function(x = matrix()) {
 ##   m is a matrix which is the inverse of x
 cacheSolve <- function(x, ...) {
     ## Return a matrix that is the inverse of 'x'
+    ## x is the matrix objects which (possibly) has a cached inverted matrix available, accessed via get inverse method
     m <- x$getinverse()
-    ## 
+    
+    ## if we DID find a cached inverted matrix, get it stored in the m cache
     if(!is.null(m)) {
         message("getting cached data")
         return(m)
     }
+    
+    ## otherwise we go ahead and call the get method to get the incoming matrix
     data <- x$get()
+    ## then we run solve to invert the incoming matrix
     m <- solve(data, ...)
+    ## finally we store the inverted matrix in m
     x$setinverse(m)
+    ## and return m
     m
 }
