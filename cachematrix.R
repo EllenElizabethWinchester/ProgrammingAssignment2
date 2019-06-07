@@ -42,6 +42,7 @@ makeCacheMatrix <- function(x = matrix()) {
     ###  set the value of the inverse
     #### 
     setinverse <- function(solve) m <<- solve
+    
     ###  get the value of the inverse previously calculated and stored in m
     getinverse <- function() m
     
@@ -67,9 +68,10 @@ cacheSolve <- function(x, ...) {
     ## x is the matrix objects which (possibly) has a cached inverted matrix available, accessed via get inverse method
     m <- x$getinverse()
     
-    ## if we DID find a cached inverted matrix, get it stored in the m cache
+    ## if we DID find a cached inverted matrix, get it from the m cache
     if(!is.null(m)) {
         message("getting cached data")
+        ## and return it here
         return(m)
     }
     
@@ -77,8 +79,8 @@ cacheSolve <- function(x, ...) {
     data <- x$get()
     ## then we run solve to invert the incoming matrix
     m <- solve(data, ...)
-    ## finally we store the inverted matrix in m
+    ## and finally we store the inverted matrix in m
     x$setinverse(m)
-    ## and return m
+    ## and return m, the inverted matrix
     m
 }
